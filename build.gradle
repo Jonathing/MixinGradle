@@ -47,7 +47,7 @@ tasks.named('processResources', ProcessResources) {
 
 license {
     ext {
-        name = gradleutils.displayName.get()
+        name = 'MixinGradle'
         organization = gradleutils.vendor.get()
         url = projectUrl
     }
@@ -57,6 +57,19 @@ license {
 
 tasks.named('groovydoc', Groovydoc) {
     enabled = false
+}
+
+tasks.register('groovydocForked', GroovydocForking) {
+    description = 'Generates Groovydoc API documentation for the main source code.'
+    group = JavaBasePlugin.DOCUMENTATION_GROUP
+
+    classpath = sourceSets.main.output + sourceSets.main.compileClasspath
+
+    source = sourceSets.main.groovy
+
+    javaLauncher = javaToolchains.launcherFor {
+        languageVersion = JavaLanguageVersion.of(8)
+    }
 }
 
 tasks.named('jar', Jar) {
@@ -69,7 +82,7 @@ tasks.named('jar', Jar) {
 }
 
 tasks.register('groovydocJar', Jar) {
-    from groovydoc.destinationDir
+    from groovydocForked.destinationDir
 
     archiveClassifier = 'groovydoc'
 }
