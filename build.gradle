@@ -11,10 +11,10 @@ plugins {
     alias libs.plugins.licenser
 }
 
-ext.buildType = project.hasProperty("buildType") ? buildType : 'RELEASE'
-ext.buildNumber = project.hasProperty("buildNumber") ? buildNumber : '0'
-ext.ciSystem = project.hasProperty("ciSystem") ? ciSystem : 'unknown'
-ext.commit = project.hasProperty("commit") ? commit : 'unknown'
+ext.buildType = project.hasProperty('buildType') ? buildType : 'RELEASE'
+ext.buildNumber = project.hasProperty('buildNumber') ? buildNumber : '0'
+ext.ciSystem = project.hasProperty('ciSystem') ? ciSystem : 'unknown'
+ext.commit = project.hasProperty('commit') ? commit : 'unknown'
 
 gradleutils.displayName = 'SpongePowered Mixin Gradle Plugin'
 gradleutils.vendor = 'SpongePowered'
@@ -74,10 +74,10 @@ tasks.register('groovydocForked', GroovydocForking) {
 
 tasks.named('jar', Jar) {
     manifest.mainAttributes(
-        "Built-By": System.properties['user.name'],
-        "Created-By": System.properties['java.vm.version'] + " (" + System.properties['java.vm.vendor'] + ")",
+        'Built-By': System.properties['user.name'],
+        'Created-By': "${System.properties['java.vm.version']} (${System.properties['java.vm.vendor']})",
         "Implementation-Title": project.name,
-        "Implementation-Version": project.version + "+" + ciSystem + "-b" + buildNumber + ".git-" + commit,
+        "Implementation-Version": "${project.version}+${ciSystem}-b${buildNumber}.git-${commit}",
     )
 }
 
@@ -107,7 +107,7 @@ gradlePlugin {
 publishing {
     repositories {
         if (buildType == 'RELEASE') {
-            if (project.hasProperty("releaseRepo")) {
+            if (project.hasProperty('releaseRepo')) {
                 maven {
                     credentials {
                         username = project.releaseRepoUsername
@@ -116,7 +116,7 @@ publishing {
                     url project.releaseRepo
                 }
             }
-            if (project.hasProperty("spongeReleaseRepo")) {
+            if (project.hasProperty('spongeReleaseRepo')) {
                 maven {
                     credentials {
                         username = project.spongeUsername
@@ -125,7 +125,7 @@ publishing {
                     url project.spongeReleaseRepo
                 }
             }
-        } else if (project.hasProperty("spongeSnapshotRepo")) {
+        } else if (project.hasProperty('spongeSnapshotRepo')) {
             maven {
                 credentials {
                     username = project.spongeUsername
