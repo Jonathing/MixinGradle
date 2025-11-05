@@ -82,6 +82,7 @@ tasks.named('jar', Jar) {
 }
 
 tasks.register('groovydocJar', Jar) {
+    dependsOn groovydocForked
     from groovydocForked.destinationDir
 
     archiveClassifier = 'groovydoc'
